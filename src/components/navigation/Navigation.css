@@ -1,0 +1,8 @@
+.scrollable-content {
+  display: "flex";
+  flex-direction: row;
+}
+
+.menu-item-card {
+  background-color: blue;
+}
