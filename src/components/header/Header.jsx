@@ -15,6 +15,7 @@ const Header = () => {
           height: "50px",
           textAlign: "center",
           textJustify: "center",
+          zIndex: "3",
         }}
       >
         <h2 className="mt-1" style={{ color: "white" }}>

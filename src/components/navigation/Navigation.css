@@ -12,3 +12,12 @@
   color: #fa4a0c;
   text-decoration: underline;
 }
+
+a {
+  -webkit-touch-callout: none; /* Desabilita a opção de copiar texto no iOS Safari */
+  -webkit-user-select: none; /* Impede a seleção de texto no iOS Safari */
+  -khtml-user-select: none; /* Impede a seleção de texto no antigo Konqueror (Linux) */
+  -moz-user-select: none; /* Impede a seleção de texto no Firefox */
+  -ms-user-select: none; /* Impede a seleção de texto no Internet Explorer/Edge */
+  user-select: none; /* Impede a seleção de texto em navegadores modernos */
+}

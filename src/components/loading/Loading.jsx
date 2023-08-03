@@ -3,7 +3,7 @@ import { Modal } from "react-bootstrap";
 
 import "./Loading.css";
 
-const Loading = ({ loading }) => {
+const Loading = ({ loading, message }) => {
   return (
     <Modal show={loading} centered backdrop="static" keyboard={false}>
       <Modal.Body>
@@ -14,7 +14,7 @@ const Loading = ({ loading }) => {
         </div>
         <div className="row text-center justify-content-center mt-1">
           <div className="col">
-            <p>Carregando...</p>
+            <p>{message}</p>
           </div>
         </div>
       </Modal.Body>

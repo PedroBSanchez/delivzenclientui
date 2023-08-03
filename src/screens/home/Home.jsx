@@ -56,7 +56,11 @@ const Home = () => {
     const noScrollDiv = noScrollRef.current;
 
     const blockScroll = (event) => {
-      event.preventDefault();
+      const deltaY = Math.abs(event.deltaY);
+      const deltaX = Math.abs(event.deltaX);
+      if (deltaX > deltaY) {
+        event.preventDefault();
+      }
     };
     noScrollDiv.addEventListener("wheel", blockScroll, { passive: false });
     noScrollDiv.addEventListener("touchmove", blockScroll, { passive: false });
@@ -69,6 +73,7 @@ const Home = () => {
 
   return (
     <>
+      <Loading loading={loading} message={"Carregando..."} />
       <div className="page-background">
         <Header />
         <Navigation
@@ -79,15 +84,15 @@ const Home = () => {
         <div className="page-background">
           <div
             ref={noScrollRef}
-            className="d-flex flex-nowrap overflow-auto page-background"
+            className="d-flex flex-nowrap page-background"
             style={{
               width: "100%",
-              zIndex: "999",
+              zIndex: "2",
               top: 94,
               position: "absolute",
-              height: "87vh",
               whiteSpace: "nowrap",
-              overflow: "hidden",
+              overflowX: "hidden",
+              overflowY: "auto",
             }}
           >
             {menu.map((categoryMenu, index) => {

@@ -28,7 +28,7 @@ const Navigation = ({ categories, activeItem, setActiveItem }) => {
         top: 50,
         left: "0",
         width: "100%",
-        zIndex: "999",
+        zIndex: "3",
         overflow: "hidden",
       }}
     >
@@ -49,6 +49,7 @@ const Navigation = ({ categories, activeItem, setActiveItem }) => {
             }}
           >
             <a
+              type="button"
               onClick={() => {
                 scrollToSection(`section${category.index}`);
               }}
