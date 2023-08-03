@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import "./Home.css";
 import Navigation from "../../components/navigation/Navigation";
 import axios from "axios";
 import Loading from "../../components/loading/Loading";
+import Header from "../../components/header/Header";
+import Category from "../category/Category";
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
+  const [activeItem, setActiveItem] = useState("section0");
   const [categories, setCategories] = useState([]);
   const [tmpState, setTmpState] = useState(false);
+  const noScrollRef = useRef(null);
 
   const [menu, setMenu] = useState([]);
 
@@ -19,13 +23,12 @@ const Home = () => {
       method: "GET",
       url: `${import.meta.env.VITE_API_URL}/api/items/getmenu`,
     };
-    h;
+
     setLoading(true);
     await axios
       .request(options)
       .then((response) => {
         setLoading(false);
-        console.log(response.data);
 
         let arrayCategories = [];
         response.data.map((menuCategory, index) => {
@@ -49,44 +52,61 @@ const Home = () => {
 
   useEffect(() => {
     getMenu();
+
+    const noScrollDiv = noScrollRef.current;
+
+    const blockScroll = (event) => {
+      event.preventDefault();
+    };
+    noScrollDiv.addEventListener("wheel", blockScroll, { passive: false });
+    noScrollDiv.addEventListener("touchmove", blockScroll, { passive: false });
+    // Remove os listeners quando o componente é desmontado
+    return () => {
+      noScrollDiv.removeEventListener("wheel", blockScroll);
+      noScrollDiv.removeEventListener("touchmove", blockScroll);
+    };
   }, []);
 
   return (
     <>
-      <div style={{ top: 0 }}>
-        <Navigation categories={categories} />
-      </div>
-      <div className="page-background mt-5">
-        <div className="container-fluid">
-          <div className="row overflow-auto" style={{ whiteSpace: "nowrap" }}>
-            <div className="col">
-              <div style={{ display: "flex", flexDirection: "row" }}>
-                <section id="sectionInicial">
-                  <div className="section-container ">
-                    <h2>Content for inicial</h2>
+      <div className="page-background">
+        <Header />
+        <Navigation
+          categories={categories}
+          activeItem={activeItem}
+          setActiveItem={setActiveItem}
+        />
+        <div className="page-background">
+          <div
+            ref={noScrollRef}
+            className="d-flex flex-nowrap overflow-auto page-background"
+            style={{
+              width: "100%",
+              zIndex: "999",
+              top: 94,
+              position: "absolute",
+              height: "87vh",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+            }}
+          >
+            {menu.map((categoryMenu, index) => {
+              return (
+                <section key={index} id={`section${index}`}>
+                  <div
+                    className="page-background"
+                    style={{
+                      minWidth: "100vw",
+                    }}
+                  >
+                    <Category categoryMenu={categoryMenu} />
                   </div>
                 </section>
-
-                {categories.map((category, index) => {
-                  return (
-                    <section id={`section${index}`} key={index}>
-                      <div className="section-container">
-                        <h2>{category.category}</h2>
-                      </div>
-                    </section>
-                  );
-                })}
-                <section id="sectionFinal">
-                  <div className="section-container">
-                    <h2>Content for Final</h2>
-                  </div>
-                </section>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
       </div>
-      <Loading loading={loading} />
     </>
   );
 };

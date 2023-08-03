@@ -4,9 +4,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import "./Navigation.css";
 import Header from "../header/Header";
 
-const Navigation = ({ categories }) => {
-  const [activeItem, setActiveItem] = useState("sectionInicial");
-
+const Navigation = ({ categories, activeItem, setActiveItem }) => {
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
 
@@ -21,64 +19,45 @@ const Navigation = ({ categories }) => {
   };
 
   return (
-    <div className="page-background">
-      <Header />
-      <Row className="overflow-auto mt-2" style={{ whiteSpace: "nowrap" }}>
-        <Col className="m-1">
-          <div className="" style={{ display: "flex", flexDirection: "row" }}>
-            <div
-              className={
-                activeItem === "sectionInicial"
-                  ? "menu-item-card active"
-                  : "menu-item-card"
-              }
+    <div
+      className="d-flex flex-nowrap overflow-auto page-background"
+      style={{
+        whiteSpace: "nowrap",
+        padding: "10px",
+        position: "fixed",
+        top: 50,
+        left: "0",
+        width: "100%",
+        zIndex: "999",
+        overflow: "hidden",
+      }}
+    >
+      {categories.map((category, index) => {
+        return (
+          <div
+            className={
+              activeItem === `section${category.index}`
+                ? "menu-item-card active"
+                : "menu-item-card"
+            }
+            key={index}
+            style={{
+              minWidth: "70px",
+              marginRight: "10px",
+              textAlign: "center",
+              textJustify: "center",
+            }}
+          >
+            <a
+              onClick={() => {
+                scrollToSection(`section${category.index}`);
+              }}
             >
-              <a
-                onClick={() => {
-                  scrollToSection("sectionInicial");
-                }}
-              >
-                Inicial
-              </a>
-            </div>
-            {categories.map((category, index) => {
-              return (
-                <div
-                  className={
-                    activeItem === `section${category.index}`
-                      ? "menu-item-card active"
-                      : "menu-item-card"
-                  }
-                  key={index}
-                >
-                  <a
-                    onClick={() => {
-                      scrollToSection(`section${category.index}`);
-                    }}
-                  >
-                    {category.category}
-                  </a>
-                </div>
-              );
-            })}
-            <div
-              className={
-                activeItem === "sectionFinal"
-                  ? "menu-item-card active"
-                  : "menu-item-card"
-              }
-            >
-              <a
-                onClick={() => {
-                  scrollToSection("sectionFinal");
-                }}
-              >
-                Inicial
-              </a>
-            </div>
+              {category.category}
+            </a>
           </div>
-        </Col>
-      </Row>
+        );
+      })}
     </div>
   );
 };

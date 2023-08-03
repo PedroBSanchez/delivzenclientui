@@ -1,5 +1,5 @@
-section {
-  overflow-x: hidden;
-  width: 100vw;
-  height: 100vh;
+.dots {
+  background-color: #fa4a0c;
+  color: #ffffff;
+  border-radius: 30px;
 }

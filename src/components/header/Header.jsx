@@ -5,11 +5,22 @@ import "./Header.css";
 const Header = () => {
   return (
     <>
-      <header className="text-center header">
-        <h2 className="pt-2" style={{ color: "white" }}>
+      <div
+        className="header"
+        style={{
+          top: "0",
+          left: "0",
+          position: "fixed",
+          width: "100%",
+          height: "50px",
+          textAlign: "center",
+          textJustify: "center",
+        }}
+      >
+        <h2 className="mt-1" style={{ color: "white" }}>
           {import.meta.env.VITE_RESTAURANT_NAME}
         </h2>
-      </header>
+      </div>
     </>
   );
 };
