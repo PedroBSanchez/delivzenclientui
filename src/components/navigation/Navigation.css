@@ -4,5 +4,11 @@
 }
 
 .menu-item-card {
-  background-color: blue;
+  border: none;
+  color: #9a9a9d;
+}
+
+.active {
+  color: #fa4a0c;
+  text-decoration: underline;
 }

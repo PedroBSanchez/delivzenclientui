@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
 import "./Navigation.css";
+import Header from "../header/Header";
 
 const Navigation = ({ categories }) => {
+  const [activeItem, setActiveItem] = useState("sectionInicial");
+
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
 
@@ -13,15 +16,23 @@ const Navigation = ({ categories }) => {
         block: "nearest",
         inline: "end",
       });
+      setActiveItem(sectionId);
     }
   };
 
   return (
-    <div className="">
-      <Row className="overflow-auto" style={{ whiteSpace: "nowrap" }}>
+    <div className="page-background">
+      <Header />
+      <Row className="overflow-auto mt-2" style={{ whiteSpace: "nowrap" }}>
         <Col className="m-1">
           <div className="" style={{ display: "flex", flexDirection: "row" }}>
-            <div className="menu-item-card ">
+            <div
+              className={
+                activeItem === "sectionInicial"
+                  ? "menu-item-card active"
+                  : "menu-item-card"
+              }
+            >
               <a
                 onClick={() => {
                   scrollToSection("sectionInicial");
@@ -32,7 +43,14 @@ const Navigation = ({ categories }) => {
             </div>
             {categories.map((category, index) => {
               return (
-                <div className="menu-item-card" key={index}>
+                <div
+                  className={
+                    activeItem === `section${category.index}`
+                      ? "menu-item-card active"
+                      : "menu-item-card"
+                  }
+                  key={index}
+                >
                   <a
                     onClick={() => {
                       scrollToSection(`section${category.index}`);
@@ -43,7 +61,13 @@ const Navigation = ({ categories }) => {
                 </div>
               );
             })}
-            <div className="menu-item-card ">
+            <div
+              className={
+                activeItem === "sectionFinal"
+                  ? "menu-item-card active"
+                  : "menu-item-card"
+              }
+            >
               <a
                 onClick={() => {
                   scrollToSection("sectionFinal");
