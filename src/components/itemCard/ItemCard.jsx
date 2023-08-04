@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { brMoney } from "../../shared/BrMoney";
 
+import Swal from "sweetalert2";
+
 import Lunch from "../../assets/lunch.png";
 import Bottle from "../../assets/bottle.png";
+
+import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
+import { TbTrashXFilled } from "react-icons/tb";
 
 import "./ItemCard.css";
 
@@ -12,6 +17,69 @@ import { BsThreeDots } from "react-icons/bs";
 
 const Itemcard = (props) => {
   const [show, setShow] = useState(false);
+
+  const [isInOrder, setIsIsInOrder] = useState(false);
+
+  const [additionalsCheck, setAdditionalsCheck] = useState(
+    props.item.additional
+  );
+  const [amount, setAmount] = useState(0);
+
+  const handleAddAmount = () => {
+    setAmount(amount + 1);
+  };
+  const handleRemoveAmount = () => {
+    if (amount > 0) {
+      setAmount(amount - 1);
+    }
+  };
+
+  const handleCheckboxChange = (code) => {
+    setAdditionalsCheck((prevData) =>
+      prevData.map((item) =>
+        item.code === code ? { ...item, isChecked: !item.isChecked } : item
+      )
+    );
+  };
+
+  const handleAddItemClick = () => {
+    if (amount > 0) {
+      //Montar objeto corretamente
+
+      let arrayCheckedAdditionals = additionalsCheck.filter(
+        (additional) => additional.isChecked
+      );
+
+      const itemAdded = {
+        _id: props.item._id,
+        name: props.item.name,
+        description: props.item.description,
+        value: props.item.value,
+        additional: arrayCheckedAdditionals,
+        amount: amount,
+      };
+
+      props.handleAddUserOrderItem(itemAdded);
+      setIsIsInOrder(true);
+    } else {
+      Swal.fire({
+        text: "Necessário pelo menos um item",
+        icon: "warning",
+      });
+    }
+  };
+
+  const handleRemoveItemClick = () => {
+    props.handleRemoveUserOrderItem(props.item);
+    let arrayAdditionalsCheck = additionalsCheck;
+    arrayAdditionalsCheck.map((element, index) => {
+      element.isChecked = false;
+    });
+
+    setAdditionalsCheck(arrayAdditionalsCheck);
+    setIsIsInOrder(false);
+    setAmount(0);
+  };
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -34,10 +102,21 @@ const Itemcard = (props) => {
     }
     return Lunch;
   };
-
-  const handleAddAdditional = (additional) => {};
-
   const icon = isBottle();
+
+  useEffect(() => {
+    let additionalsCheckArray = [];
+
+    additionalsCheck.map((element, index) => {
+      additionalsCheckArray.push({ ...element, isChecked: false });
+    });
+    setAdditionalsCheck(additionalsCheckArray);
+
+    const isItemInOrder = props.userOrderItems.some(
+      (obj) => obj._id === props.item._id
+    );
+  }, []);
+
   return (
     <>
       <div className="item-card p-3">
@@ -46,7 +125,7 @@ const Itemcard = (props) => {
             <img width={50} height={50} src={icon} />
           </div>
           <div className="col">
-            <p>
+            <p style={{ fontSize: "14px" }}>
               {props.item.name} <br /> R${brMoney(props.item.value)}
             </p>
           </div>
@@ -94,32 +173,34 @@ const Itemcard = (props) => {
               </div>
             </>
           )}
-          {props.item.additional && props.item.additional.length > 0 && (
+          {additionalsCheck && additionalsCheck.length > 0 && (
             <>
               <div className="row mt-3">
                 <div className="offset-2 col">
                   <h5>Adicionais</h5>
                 </div>
               </div>
-              {props.item.additional.map((additional, index) => {
+              {additionalsCheck.map((additional, index) => {
                 return (
                   <div key={index} className="row justify-content-center mt-1">
                     <div className="offset-1 col-9">
                       <div className="item-card p-2">
-                        <div className="row">
-                          <div className="col">
+                        <div className="row justify-content-around">
+                          <div className="col-8">
                             <p>
                               {additional.name} R${brMoney(additional.value)}
                             </p>
                           </div>
                           <div className="col">
-                            <label class="container-check">
+                            <label className="container-check">
                               <input
-                                checked={false}
+                                checked={additional.isChecked}
                                 type="checkbox"
-                                onChange={(event) => {}}
+                                onChange={(event) =>
+                                  handleCheckboxChange(additional.code)
+                                }
                               />
-                              <div class="checkmark"></div>
+                              <div className="checkmark"></div>
                             </label>
                           </div>
                         </div>
@@ -131,13 +212,48 @@ const Itemcard = (props) => {
             </>
           )}
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
+        <Modal.Footer className="row">
+          <div className={`${isInOrder ? "col-5" : "col-7"}`}>
+            <div className="p-2 ">
+              <AiFillMinusSquare
+                onClick={handleRemoveAmount}
+                size={40}
+                style={{ color: "#fa4a0c", cursor: "pointer" }}
+              />
+              <span className="m-2" style={{ fontSize: "25px" }}>
+                {amount}
+              </span>
+              <AiFillPlusSquare
+                onClick={handleAddAmount}
+                size={40}
+                style={{ color: "#fa4a0c", cursor: "pointer" }}
+              />
+            </div>
+          </div>
+
+          {isInOrder && (
+            <div className="col-2">
+              <TbTrashXFilled
+                onClick={handleRemoveItemClick}
+                className="m-2"
+                size={30}
+                style={{ color: "#c54646", cursor: "pointer" }}
+              />
+            </div>
+          )}
+          <div className="col">
+            <button
+              className={`${
+                amount > 0
+                  ? "item-modal-add-button"
+                  : "item-modal-add-buton-disabled"
+              }`}
+              disabled={amount <= 0}
+              onClick={handleAddItemClick}
+            >
+              Adicionar
+            </button>
+          </div>
         </Modal.Footer>
       </Modal>
     </>

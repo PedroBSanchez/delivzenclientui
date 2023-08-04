@@ -9,7 +9,24 @@
   background-color: #fa4a0c;
   border-radius: 30px;
   color: white;
-  font-size: 13Zpx;
+}
+
+.item-modal-add-button {
+  border: none;
+  background-color: #fa4a0c;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  transition: 0.5s;
+}
+
+.item-modal-add-buton-disabled {
+  border: none;
+  background-color: #5e2916;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  transition: 0.5s;
 }
 
 /* Hide the default checkbox */

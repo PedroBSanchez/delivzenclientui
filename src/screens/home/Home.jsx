@@ -6,6 +6,8 @@ import axios from "axios";
 import Loading from "../../components/loading/Loading";
 import Header from "../../components/header/Header";
 import Category from "../category/Category";
+import { deepEqual } from "../../shared/DeepEqual";
+import Swal from "sweetalert2";
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
@@ -17,6 +19,46 @@ const Home = () => {
   const [menu, setMenu] = useState([]);
 
   const [userOrderItems, setUserOrderItems] = useState([]);
+
+  const handleAddUserOrderItem = (item) => {
+    const isItemInOrder = userOrderItems.some((obj) => obj._id === item._id);
+    if (isItemInOrder) {
+      let itemInOrder = userOrderItems.find((e) => e._id == item._id);
+
+      if (
+        itemInOrder.amount != item.amount ||
+        !isChangedAdditional(itemInOrder.additional, item.additional)
+      ) {
+        const indexInOrder = userOrderItems.findIndex(
+          (e) => e._id == itemInOrder._id
+        );
+        let arrayUserOrderItems = userOrderItems;
+        arrayUserOrderItems.splice(indexInOrder, 1);
+        arrayUserOrderItems.push(item);
+        setUserOrderItems(arrayUserOrderItems);
+        Swal.fire({ title: "Carrinho atualizado", icon: "success" });
+      } else {
+        Swal.fire({ text: "Carrinho não alterado", icon: "warning" });
+      }
+    } else {
+      let arrayUserOrderItems = [...userOrderItems, item];
+      setUserOrderItems(arrayUserOrderItems);
+      Swal.fire({ title: "Item adicionado", icon: "success" });
+    }
+  };
+
+  const handleRemoveUserOrderItem = (item) => {
+    const isItemInOrder = userOrderItems.some((obj) => obj._id === item._id);
+    if (isItemInOrder) {
+      const indexInOrder = userOrderItems.findIndex((e) => e._id == item._id);
+      let arrayUserOrderItems = userOrderItems;
+      arrayUserOrderItems.splice(indexInOrder, 1);
+      setUserOrderItems(arrayUserOrderItems);
+      Swal.fire({ title: "Item removido", icon: "success" });
+    } else {
+      Swal.fire({ text: "Item não existe no carrinho", icon: "warning" });
+    }
+  };
 
   const getMenu = async () => {
     const options = {
@@ -48,6 +90,20 @@ const Home = () => {
         setLoading(false);
         console.log(error);
       });
+  };
+
+  const isChangedAdditional = (array1, array2) => {
+    if (array1.length != array2.length) {
+      return false;
+    }
+
+    for (let index = 0; index < array1.length; index++) {
+      if (array1[index].code != array2[index].code) {
+        return false;
+      }
+    }
+
+    return true;
   };
 
   useEffect(() => {
@@ -104,7 +160,12 @@ const Home = () => {
                       minWidth: "100vw",
                     }}
                   >
-                    <Category categoryMenu={categoryMenu} />
+                    <Category
+                      categoryMenu={categoryMenu}
+                      handleAddUserOrderItem={handleAddUserOrderItem}
+                      userOrderItems={userOrderItems}
+                      handleRemoveUserOrderItem={handleRemoveUserOrderItem}
+                    />
                   </div>
                 </section>
               );

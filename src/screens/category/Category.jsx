@@ -15,7 +15,13 @@ const Category = (props) => {
           return (
             <div key={index} className="row justify-content-center mt-3">
               <div className="col-9">
-                <ItemCard item={item} category={props.categoryMenu.category} />
+                <ItemCard
+                  item={item}
+                  category={props.categoryMenu.category}
+                  handleAddUserOrderItem={props.handleAddUserOrderItem}
+                  userOrderItems={props.userOrderItems}
+                  handleRemoveUserOrderItem={props.handleRemoveUserOrderItem}
+                />
               </div>
             </div>
           );

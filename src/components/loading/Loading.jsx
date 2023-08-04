@@ -9,7 +9,7 @@ const Loading = ({ loading, message }) => {
       <Modal.Body>
         <div className="row text-center justify-content-center align-items-center p-2">
           <div className="col-md-3 col-4">
-            <div class="hungry-4"></div>
+            <div className="hungry-4"></div>
           </div>
         </div>
         <div className="row text-center justify-content-center mt-1">
