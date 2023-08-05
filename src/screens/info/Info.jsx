@@ -1,18 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+
+import Swal from "sweetalert2";
 
 import "./Info.css";
 import ReactInputMask from "react-input-mask";
 
 const Info = (props) => {
   const handleAdvance = () => {
-    const section = document.getElementById("sectionPayment");
-    section.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-      inline: "end",
-    });
-    props.setActiveItem("sectionPayment");
+    if (
+      props.name &&
+      props.address &&
+      props.phone &&
+      props.addressNumber &&
+      props.neighborhood
+    ) {
+      const section = document.getElementById("sectionPayment");
+      section.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "end",
+      });
+      props.setActiveItem("sectionPayment");
+    } else {
+      Swal.fire({ text: "Campos obrigatórios", icon: "warning" });
+    }
   };
+
+  useEffect(() => {
+    props.setName(localStorage.getItem("userName") ?? "");
+    props.setPhone(localStorage.getItem("userPhone") ?? "");
+    props.setAddress(localStorage.getItem("userAddress") ?? "");
+    props.setAddressNumber(localStorage.getItem("userAddressNumber") ?? "");
+    props.setNeighborhood(localStorage.getItem("userNeighborhood") ?? "");
+    props.setComplement(localStorage.getItem("userComplement") ?? "");
+  }, []);
+
   return (
     <>
       <div className="container-fluid">
@@ -93,7 +115,7 @@ const Info = (props) => {
                     className="form-control"
                     value={props.neighborhood}
                     onChange={(e) => {
-                      props.setNeihborhood(e.target.value);
+                      props.setNeighborhood(e.target.value);
                     }}
                   />
                 </div>
@@ -117,7 +139,7 @@ const Info = (props) => {
       {props.activeItem == "sectionInfo" && (
         <div className="fixed-bottom text-center p-3">
           <button className="advance-button" onClick={handleAdvance}>
-            Finalizar
+            Avançar
           </button>
         </div>
       )}

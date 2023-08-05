@@ -9,11 +9,14 @@ import Category from "../category/Category";
 import Info from "../info/Info";
 import { deepEqual } from "../../shared/DeepEqual";
 import Swal from "sweetalert2";
+import Payment from "../payment/Payment";
+import Confirm from "../confirm/Confirm";
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
   const [activeItem, setActiveItem] = useState("section0");
   const [categories, setCategories] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
   const [tmpState, setTmpState] = useState(false);
   const noScrollRef = useRef(null);
 
@@ -37,6 +40,32 @@ const Home = () => {
         arrayUserOrderItems.splice(indexInOrder, 1);
         arrayUserOrderItems.push(item);
         setUserOrderItems(arrayUserOrderItems);
+
+        //Remove value of the item that is already in order
+        let additionalValuesItemInOrder = 0;
+        let itemPriceItemInOrder = 0;
+
+        itemInOrder.additional.map((element) => {
+          additionalValuesItemInOrder += element.value;
+        });
+
+        itemPriceItemInOrder =
+          (itemInOrder.value + additionalValuesItemInOrder) *
+          itemInOrder.amount;
+
+        //Add value of the update item
+        let additionalValues = 0;
+        let itemPrice = 0;
+
+        item.additional.map((element) => {
+          additionalValues += element.value;
+        });
+
+        itemPrice = (item.value + additionalValues) * item.amount;
+
+        let newTotalPrice = totalPrice + itemPrice - itemPriceItemInOrder;
+        setTotalPrice(newTotalPrice);
+
         Swal.fire({ title: "Carrinho atualizado", icon: "success" });
       } else {
         Swal.fire({ text: "Carrinho não alterado", icon: "warning" });
@@ -44,6 +73,17 @@ const Home = () => {
     } else {
       let arrayUserOrderItems = [...userOrderItems, item];
       setUserOrderItems(arrayUserOrderItems);
+
+      let additionalValues = 0;
+      let itemPrice = 0;
+
+      item.additional.map((element) => {
+        additionalValues += element.value;
+      });
+
+      itemPrice = (item.value + additionalValues) * item.amount;
+
+      setTotalPrice(totalPrice + itemPrice);
       Swal.fire({ title: "Item adicionado", icon: "success" });
     }
   };
@@ -52,9 +92,25 @@ const Home = () => {
     const isItemInOrder = userOrderItems.some((obj) => obj._id === item._id);
     if (isItemInOrder) {
       const indexInOrder = userOrderItems.findIndex((e) => e._id == item._id);
+
+      let additionalValues = 0;
+      let itemPrice = 0;
+
+      userOrderItems[indexInOrder].additional.map((element) => {
+        additionalValues += element.value;
+      });
+
+      itemPrice =
+        (userOrderItems[indexInOrder].value + additionalValues) *
+        userOrderItems[indexInOrder].amount;
+
+      let newPrice = totalPrice - itemPrice;
+      setTotalPrice(newPrice);
+
       let arrayUserOrderItems = userOrderItems;
       arrayUserOrderItems.splice(indexInOrder, 1);
       setUserOrderItems(arrayUserOrderItems);
+
       Swal.fire({ title: "Item removido", icon: "success" });
     } else {
       Swal.fire({ text: "Item não existe no carrinho", icon: "warning" });
@@ -177,6 +233,8 @@ const Home = () => {
                       handleRemoveUserOrderItem={handleRemoveUserOrderItem}
                       setActiveItem={setActiveItem}
                       activeItem={activeItem}
+                      totalPrice={totalPrice}
+                      setTotalPrice={setTotalPrice}
                     />
                   </div>
                 </section>
@@ -204,10 +262,30 @@ const Home = () => {
               </div>
             </section>
             <section id={`sectionPayment`}>
-              <div
-                className="page-background"
-                style={{ minWidth: "100vw" }}
-              ></div>
+              <div className="page-background" style={{ minWidth: "100vw" }}>
+                <Payment
+                  paymentMethod={paymentMethod}
+                  setPaymentMethod={setPaymentMethod}
+                  activeItem={activeItem}
+                  setActiveItem={setActiveItem}
+                />
+              </div>
+            </section>
+            <section id={`sectionConfirm`}>
+              <div className="page-background" style={{ minWidth: "100vw" }}>
+                <Confirm
+                  userOrderItems={userOrderItems}
+                  name={name}
+                  phone={phone}
+                  address={address}
+                  addressNumber={addressNumber}
+                  neighborhood={neighborhood}
+                  complement={complement}
+                  paymentMethod={paymentMethod}
+                  handleRemoveUserOrderItem={handleRemoveUserOrderItem}
+                  totalPrice={totalPrice}
+                />
+              </div>
             </section>
           </div>
         </div>

@@ -29,6 +29,7 @@ const Category = (props) => {
     <>
       <hr />
       <div className="container-fluid mt-4 pb-2">
+        <h5>Total: R${brMoney(props.totalPrice)}</h5>
         {props.categoryMenu.items.map((item, index) => {
           return (
             <div key={index} className="row justify-content-center mt-3">
@@ -46,7 +47,8 @@ const Category = (props) => {
         })}
       </div>
       {props.activeItem != "sectionInfo" &&
-        props.activeItem != "sectionConfirm" && (
+        props.activeItem != "sectionConfirm" &&
+        props.activeItem != "sectionPayment" && (
           <div className="fixed-bottom text-center p-3">
             <button className="advance-button" onClick={handleAdvance}>
               Avançar

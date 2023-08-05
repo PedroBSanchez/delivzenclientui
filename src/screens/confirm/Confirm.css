@@ -1,0 +1,44 @@
+.card-info {
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 2px 2px 5px #888888;
+}
+
+.order-detail-payment-icon {
+  border-radius: 10px;
+}
+
+.order-detail-payment-icon-pix {
+  background-color: #1c75b6;
+  color: white;
+}
+
+.order-detail-payment-icon-card {
+  background-color: #f47b0a;
+  color: white;
+}
+
+.order-detail-payment-icon-money {
+  background-color: #46ed89;
+  color: white;
+}
+
+.advance-button {
+  border: none;
+  background-color: #84c94f;
+  color: white;
+  width: 60vw;
+  height: 7vh;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.advance-button-disabled {
+  border: none;
+  background-color: #2d3f20;
+  color: white;
+  width: 60vw;
+  height: 7vh;
+  border-radius: 30px;
+  cursor: pointer;
+}

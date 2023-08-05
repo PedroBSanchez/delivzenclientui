@@ -111,10 +111,6 @@ const Itemcard = (props) => {
       additionalsCheckArray.push({ ...element, isChecked: false });
     });
     setAdditionalsCheck(additionalsCheckArray);
-
-    const isItemInOrder = props.userOrderItems.some(
-      (obj) => obj._id === props.item._id
-    );
   }, []);
 
   return (
