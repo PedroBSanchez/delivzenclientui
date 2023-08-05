@@ -6,6 +6,7 @@ import Home from "./screens/home/Home";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import StartPage from "./screens/startPage/StartPage";
+import Finish from "./screens/finish/Finish";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<StartPage />} />
           <Route path="*" element={<StartPage />} />
           <Route path="/pedido" element={<Home />} />
+          <Route path="/pedidoconcluido" element={<Finish />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -192,6 +192,7 @@ const Home = () => {
   const [neighborhood, setNeighborhood] = useState("");
   const [complement, setComplement] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [observations, setObservations] = useState("");
 
   return (
     <>
@@ -268,6 +269,8 @@ const Home = () => {
                   setPaymentMethod={setPaymentMethod}
                   activeItem={activeItem}
                   setActiveItem={setActiveItem}
+                  observations={observations}
+                  setObservations={setObservations}
                 />
               </div>
             </section>
@@ -282,8 +285,10 @@ const Home = () => {
                   neighborhood={neighborhood}
                   complement={complement}
                   paymentMethod={paymentMethod}
+                  observations={observations}
                   handleRemoveUserOrderItem={handleRemoveUserOrderItem}
                   totalPrice={totalPrice}
+                  setLoading={setLoading}
                 />
               </div>
             </section>

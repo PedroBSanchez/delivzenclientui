@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 import "./Confirm.css";
 
@@ -7,8 +8,11 @@ import { MdPix } from "react-icons/md";
 import { FaMoneyBillAlt } from "react-icons/fa";
 import { TbTrashXFilled } from "react-icons/tb";
 import { brMoney } from "../../shared/BrMoney";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 const Confirm = (props) => {
+  const navigate = useNavigate();
   const handleFinishOrder = async () => {
     localStorage.setItem("userName", props.name);
     localStorage.setItem("userPhone", props.phone);
@@ -16,6 +20,58 @@ const Confirm = (props) => {
     localStorage.setItem("userAddressNumber", props.addressNumber);
     localStorage.setItem("userNeighborhood", props.neighborhood);
     localStorage.setItem("userComplement", props.complement);
+
+    let items = [];
+
+    props.userOrderItems.map((element) => {
+      let additionalsInItem = [];
+      element.additional.map((e) => {
+        additionalsInItem.push(e.code);
+      });
+
+      items.push({
+        itemId: element._id,
+        amount: element.amount,
+        additionalCodes: additionalsInItem,
+      });
+    });
+
+    const data = {
+      client: props.name,
+      address: props.address,
+      adressNumber: props.addressNumber,
+      complement: props.complement,
+      neighborhood: props.neighborhood,
+      phoneNumber: props.phone,
+      paymentMethod: props.paymentMethod,
+      items: items,
+      observations: props.observations,
+    };
+
+    const options = {
+      method: "POST",
+      url: `${import.meta.env.VITE_API_URL}/api/orders/create`,
+      data: data,
+      headers: {
+        ContentType: "application/json",
+      },
+    };
+
+    props.setLoading(true);
+    await axios
+      .request(options)
+      .then((response) => {
+        props.setLoading(false);
+        Swal.fire({ title: "Pedido realizado com sucesso", icon: "success" });
+
+        setTimeout(() => {
+          navigate("/pedidoconcluido");
+        }, 1000);
+      })
+      .then((error) => {
+        props.setLoading(false);
+        console.log(error);
+      });
   };
   return (
     <>

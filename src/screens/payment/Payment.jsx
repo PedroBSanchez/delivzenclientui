@@ -109,6 +109,22 @@ const Payment = (props) => {
             </div>
           </div>
         </div>
+        <div className="row justify-content-center mt-3">
+          <div className="col-9">
+            <div className="card-info p-3">
+              <label>Observações (opcional)</label>
+              <textarea
+                className="form-control"
+                rows={3}
+                value={props.observations}
+                onChange={(e) => {
+                  props.setObservations(e.target.value);
+                }}
+              />
+            </div>
+          </div>
+        </div>
+
         {props.activeItem == "sectionPayment" && (
           <div className="fixed-bottom text-center p-3">
             <button className="advance-button" onClick={handleAdvance}>
