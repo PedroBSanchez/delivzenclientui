@@ -1,7 +1,7 @@
-.dots {
-  background-color: #fa4a0c;
-  color: #ffffff;
-  border-radius: 30px;
+.card-info {
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 2px 2px 5px #888888;
 }
 
 .advance-button {

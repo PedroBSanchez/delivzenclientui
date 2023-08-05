@@ -119,7 +119,7 @@ const Itemcard = (props) => {
 
   return (
     <>
-      <div className="item-card p-3">
+      <div className="item-card p-3" onClick={handleShow}>
         <div className="row">
           <div className="col-3">
             <img width={50} height={50} src={icon} />

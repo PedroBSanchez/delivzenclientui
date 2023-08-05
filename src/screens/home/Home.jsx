@@ -6,6 +6,7 @@ import axios from "axios";
 import Loading from "../../components/loading/Loading";
 import Header from "../../components/header/Header";
 import Category from "../category/Category";
+import Info from "../info/Info";
 import { deepEqual } from "../../shared/DeepEqual";
 import Swal from "sweetalert2";
 
@@ -127,6 +128,15 @@ const Home = () => {
     };
   }, []);
 
+  //Info
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [addressNumber, setAddressNumber] = useState("");
+  const [neighborhood, setNeighborhood] = useState("");
+  const [complement, setComplement] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
+
   return (
     <>
       <Loading loading={loading} message={"Carregando..."} />
@@ -165,11 +175,40 @@ const Home = () => {
                       handleAddUserOrderItem={handleAddUserOrderItem}
                       userOrderItems={userOrderItems}
                       handleRemoveUserOrderItem={handleRemoveUserOrderItem}
+                      setActiveItem={setActiveItem}
+                      activeItem={activeItem}
                     />
                   </div>
                 </section>
               );
             })}
+
+            <section id={`sectionInfo`}>
+              <div className="page-background" style={{ minWidth: "100vw" }}>
+                <Info
+                  name={name}
+                  setName={setName}
+                  phone={phone}
+                  setPhone={setPhone}
+                  address={address}
+                  setAddress={setAddress}
+                  addressNumber={addressNumber}
+                  setAddressNumber={setAddressNumber}
+                  neighborhood={neighborhood}
+                  setNeighborhood={setNeighborhood}
+                  complement={complement}
+                  setComplement={setComplement}
+                  activeItem={activeItem}
+                  setActiveItem={setActiveItem}
+                />
+              </div>
+            </section>
+            <section id={`sectionPayment`}>
+              <div
+                className="page-background"
+                style={{ minWidth: "100vw" }}
+              ></div>
+            </section>
           </div>
         </div>
       </div>

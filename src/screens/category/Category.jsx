@@ -2,11 +2,29 @@ import React, { useEffect, useState } from "react";
 
 import { brMoney } from "../../shared/BrMoney";
 
+import Swal from "sweetalert2";
 import "./Category.css";
 
 import ItemCard from "../../components/itemCard/ItemCard";
 
 const Category = (props) => {
+  const handleAdvance = () => {
+    if (props.userOrderItems.length > 0) {
+      const section = document.getElementById("sectionInfo");
+
+      if (section) {
+        section.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+          inline: "end",
+        });
+        props.setActiveItem("sectionInfo");
+      }
+    } else {
+      Swal.fire({ text: "Necessário adicionar um item", icon: "warning" });
+    }
+  };
+
   return (
     <>
       <hr />
@@ -27,6 +45,14 @@ const Category = (props) => {
           );
         })}
       </div>
+      {props.activeItem != "sectionInfo" &&
+        props.activeItem != "sectionConfirm" && (
+          <div className="fixed-bottom text-center p-3">
+            <button className="advance-button" onClick={handleAdvance}>
+              Avançar
+            </button>
+          </div>
+        )}
     </>
   );
 };
