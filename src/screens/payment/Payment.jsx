@@ -9,13 +9,16 @@ const Payment = (props) => {
   const handleAdvance = () => {
     if (props.paymentMethod) {
       const section = document.getElementById("sectionConfirm");
+      const horizontalScrollDiv = document.getElementById(
+        "horizontalScrollDiv"
+      );
 
       if (section) {
-        section.scrollIntoView({
-          behavior: "smooth",
-          block: "nearest",
-          inline: "end",
-        });
+        const x = section.offsetLeft;
+
+        window.scrollTo({ top: 0, behavior: "auto" });
+        horizontalScrollDiv.scrollTo({ top: 0, behavior: "smooth", left: x });
+
         props.setActiveItem("sectionConfirm");
       }
     }
@@ -126,7 +129,7 @@ const Payment = (props) => {
         </div>
 
         {props.activeItem == "sectionPayment" && (
-          <div className="fixed-bottom text-center p-3">
+          <div className="fixed-bottom page-background text-center p-3">
             <button className="advance-button" onClick={handleAdvance}>
               Confirmar
             </button>

@@ -11,13 +11,16 @@ const Category = (props) => {
   const handleAdvance = () => {
     if (props.userOrderItems.length > 0) {
       const section = document.getElementById("sectionInfo");
+      const horizontalScrollDiv = document.getElementById(
+        "horizontalScrollDiv"
+      );
 
       if (section) {
-        section.scrollIntoView({
-          behavior: "smooth",
-          block: "nearest",
-          inline: "end",
-        });
+        const x = section.offsetLeft;
+
+        window.scrollTo({ top: 0, behavior: "auto" });
+        horizontalScrollDiv.scrollTo({ top: 0, behavior: "smooth", left: x });
+
         props.setActiveItem("sectionInfo");
       }
     } else {
@@ -28,7 +31,7 @@ const Category = (props) => {
   return (
     <>
       <hr />
-      <div className="container-fluid mt-4 pb-2">
+      <div className="container-fluid mt-4 p-2">
         <h5>Total: R${brMoney(props.totalPrice)}</h5>
         {props.categoryMenu.items.map((item, index) => {
           return (
@@ -49,8 +52,12 @@ const Category = (props) => {
       {props.activeItem != "sectionInfo" &&
         props.activeItem != "sectionConfirm" &&
         props.activeItem != "sectionPayment" && (
-          <div className="fixed-bottom text-center p-3">
-            <button className="advance-button" onClick={handleAdvance}>
+          <div className="fixed-bottom  text-center p-3" style={{ zIndex: 1 }}>
+            <button
+              className="advance-button"
+              onClick={handleAdvance}
+              style={{ zIndex: 3 }}
+            >
               Avançar
             </button>
           </div>

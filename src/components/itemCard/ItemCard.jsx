@@ -61,6 +61,7 @@ const Itemcard = (props) => {
 
       props.handleAddUserOrderItem(itemAdded);
       setIsIsInOrder(true);
+      handleClose();
     } else {
       Swal.fire({
         text: "Necessário pelo menos um item",
@@ -134,7 +135,7 @@ const Itemcard = (props) => {
       </div>
       <Modal show={show} onHide={handleClose} centered fullscreen scrollable>
         <Modal.Header closeButton>
-          <button className="item-modal-back-button p-2" onClick={handleClose}>
+          <button className="item-modal-back-button p-3" onClick={handleClose}>
             Voltar
           </button>
         </Modal.Header>

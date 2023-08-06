@@ -15,11 +15,17 @@ const Info = (props) => {
       props.neighborhood
     ) {
       const section = document.getElementById("sectionPayment");
-      section.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-        inline: "end",
-      });
+      const horizontalScrollDiv = document.getElementById(
+        "horizontalScrollDiv"
+      );
+
+      if (section) {
+        const x = section.offsetLeft;
+
+        window.scrollTo({ top: 0, behavior: "auto" });
+        horizontalScrollDiv.scrollTo({ top: 0, behavior: "smooth", left: x });
+      }
+
       props.setActiveItem("sectionPayment");
     } else {
       Swal.fire({ text: "Campos obrigatórios", icon: "warning" });
@@ -37,8 +43,8 @@ const Info = (props) => {
 
   return (
     <>
-      <div className="container-fluid">
-        <div className="row mt-4">
+      <div className="container-fluid page-background">
+        <div className="row mt-3">
           <div className="offset-2 col">
             <h5>Informações</h5>
           </div>
@@ -135,14 +141,14 @@ const Info = (props) => {
             </div>
           </div>
         </div>
+        {props.activeItem == "sectionInfo" && (
+          <div className="fixed-bottom page-background text-center p-3">
+            <button className="advance-button" onClick={handleAdvance}>
+              Avançar
+            </button>
+          </div>
+        )}
       </div>
-      {props.activeItem == "sectionInfo" && (
-        <div className="fixed-bottom text-center p-3">
-          <button className="advance-button" onClick={handleAdvance}>
-            Avançar
-          </button>
-        </div>
-      )}
     </>
   );
 };

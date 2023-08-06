@@ -7,13 +7,14 @@ import Header from "../header/Header";
 const Navigation = ({ categories, activeItem, setActiveItem }) => {
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
+    const horizontalScrollDiv = document.getElementById("horizontalScrollDiv");
 
     if (section) {
-      section.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-        inline: "end",
-      });
+      const x = section.offsetLeft;
+
+      window.scrollTo({ top: 0, behavior: "auto" });
+      horizontalScrollDiv.scrollTo({ top: 0, behavior: "smooth", left: x });
+
       setActiveItem(sectionId);
     }
   };

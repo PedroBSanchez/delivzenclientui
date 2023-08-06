@@ -43,7 +43,7 @@ const StartPage = () => {
         </div>
       </div>
       <div className="gradient-over"></div>
-      <div className="fixed-bottom text-center p-3">
+      <div className="fixed-bottom text-center p-5">
         <button className="start-button" onClick={handleNavigate}>
           Começar
         </button>

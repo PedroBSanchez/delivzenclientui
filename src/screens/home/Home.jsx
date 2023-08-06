@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "./Home.css";
 import Navigation from "../../components/navigation/Navigation";
@@ -13,11 +14,13 @@ import Payment from "../payment/Payment";
 import Confirm from "../confirm/Confirm";
 
 const Home = () => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [activeItem, setActiveItem] = useState("section0");
   const [categories, setCategories] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [tmpState, setTmpState] = useState(false);
+  const [scroll, setScroll] = useState(false);
   const noScrollRef = useRef(null);
 
   const [menu, setMenu] = useState([]);
@@ -146,6 +149,7 @@ const Home = () => {
       .catch((error) => {
         setLoading(false);
         console.log(error);
+        navigate("/");
       });
   };
 
@@ -171,16 +175,16 @@ const Home = () => {
     const blockScroll = (event) => {
       const deltaY = Math.abs(event.deltaY);
       const deltaX = Math.abs(event.deltaX);
-      if (deltaX > deltaY) {
-        event.preventDefault();
+      if (deltaX > deltaY || !scroll) {
+        //event.preventDefault();
       }
     };
-    noScrollDiv.addEventListener("wheel", blockScroll, { passive: false });
-    noScrollDiv.addEventListener("touchmove", blockScroll, { passive: false });
+    //noScrollDiv.addEventListener("wheel", blockScroll, { passive: false });
+    //noScrollDiv.addEventListener("touchmove", blockScroll, { passive: false });
     // Remove os listeners quando o componente é desmontado
     return () => {
-      noScrollDiv.removeEventListener("wheel", blockScroll);
-      noScrollDiv.removeEventListener("touchmove", blockScroll);
+      //noScrollDiv.removeEventListener("wheel", blockScroll);
+      //noScrollDiv.removeEventListener("touchmove", blockScroll);
     };
   }, []);
 
@@ -206,6 +210,7 @@ const Home = () => {
         />
         <div className="page-background">
           <div
+            id="horizontalScrollDiv"
             ref={noScrollRef}
             className="d-flex flex-nowrap page-background"
             style={{
@@ -225,6 +230,7 @@ const Home = () => {
                     className="page-background"
                     style={{
                       minWidth: "100vw",
+                      minHeight: "100vh",
                     }}
                   >
                     <Category
@@ -289,6 +295,7 @@ const Home = () => {
                   handleRemoveUserOrderItem={handleRemoveUserOrderItem}
                   totalPrice={totalPrice}
                   setLoading={setLoading}
+                  activeItem={activeItem}
                 />
               </div>
             </section>

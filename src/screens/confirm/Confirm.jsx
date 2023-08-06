@@ -163,8 +163,9 @@ const Confirm = (props) => {
             </table>
           </div>
         </div>
-        <div className="row text-center justify-content-center mt-3">
-          <div className="col">
+
+        {props.activeItem == "sectionConfirm" && (
+          <div className="fixed-bottom page-background text-center p-3">
             <button
               className={
                 props.userOrderItems.length > 0
@@ -177,7 +178,7 @@ const Confirm = (props) => {
               Finalizar
             </button>
           </div>
-        </div>
+        )}
       </div>
     </>
   );
