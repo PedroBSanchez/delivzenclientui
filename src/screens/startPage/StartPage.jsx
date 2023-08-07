@@ -29,7 +29,9 @@ const StartPage = () => {
       </div>
       <div className="row text-center justify-content-center mt-4">
         <div className="col">
-          <h1 style={{ color: "white" }}>{restaurantName}</h1>
+          <h1 style={{ color: "white" }}>
+            {import.meta.env.VITE_RESTAURANT_NAME}
+          </h1>
         </div>
       </div>
 
