@@ -3,8 +3,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import DoofLogo from "../../assets/doofLogo.png";
-import Bootle from "../../assets/bottle.png";
-import Lunch from "../../assets/lunch.png";
 
 import "./StartPage.css";
 
@@ -50,8 +48,6 @@ const StartPage = () => {
           Começar
         </button>
       </div>
-      <img src={Lunch} hidden width={50} />
-      <img src={Bootle} hidden width={50} />
     </div>
   );
 };

@@ -142,7 +142,7 @@ const Itemcard = (props) => {
         <Modal.Body>
           <div className="row mt-4">
             <div className="offset-2 col-2">
-              <img width={50} height={50} src={icon} />
+              <img width={50} height={50} src={`${icon}`} />
             </div>
             <div className="col">
               <h4>
