@@ -12,6 +12,7 @@ import { deepEqual } from "../../shared/DeepEqual";
 import Swal from "sweetalert2";
 import Payment from "../payment/Payment";
 import Confirm from "../confirm/Confirm";
+import { apiUrl } from "../../shared/ApiUrl";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -123,7 +124,7 @@ const Home = () => {
   const getMenu = async () => {
     const options = {
       method: "GET",
-      url: `${import.meta.env.VITE_API_URL}/api/items/getmenu`,
+      url: `${apiUrl}/api/items/getmenu`,
     };
 
     setLoading(true);

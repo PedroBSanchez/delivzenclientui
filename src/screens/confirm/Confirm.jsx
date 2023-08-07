@@ -10,6 +10,7 @@ import { TbTrashXFilled } from "react-icons/tb";
 import { brMoney } from "../../shared/BrMoney";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { apiUrl } from "../../shared/ApiUrl";
 
 const Confirm = (props) => {
   const navigate = useNavigate();
@@ -50,7 +51,7 @@ const Confirm = (props) => {
 
     const options = {
       method: "POST",
-      url: `${import.meta.env.VITE_API_URL}/api/orders/create`,
+      url: `${apiUrl}/api/orders/create`,
       data: data,
       headers: {
         ContentType: "application/json",
