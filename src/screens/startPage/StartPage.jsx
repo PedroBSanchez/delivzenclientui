@@ -3,7 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import DoofLogo from "../../assets/doofLogo.png";
-import Bootle from "../../assets/bootle.png";
+import Bootle from "../../assets/bottle.png";
 import Lunch from "../../assets/lunch.png";
 
 import "./StartPage.css";
