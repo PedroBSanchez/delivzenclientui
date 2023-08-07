@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import DoofLogo from "../../assets/doofLogo.png";
 
 import "./StartPage.css";
+import { restaurantName } from "../../shared/config";
 
 const StartPage = () => {
   const navigate = useNavigate();
@@ -28,9 +29,7 @@ const StartPage = () => {
       </div>
       <div className="row text-center justify-content-center mt-4">
         <div className="col">
-          <h1 style={{ color: "white" }}>
-            {import.meta.env.VITE_RESTAURANT_NAME}
-          </h1>
+          <h1 style={{ color: "white" }}>{restaurantName}</h1>
         </div>
       </div>
 

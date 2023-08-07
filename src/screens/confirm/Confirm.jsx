@@ -10,7 +10,7 @@ import { TbTrashXFilled } from "react-icons/tb";
 import { brMoney } from "../../shared/BrMoney";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { apiUrl } from "../../shared/ApiUrl";
+import { apiUrl } from "../../shared/config";
 
 const Confirm = (props) => {
   const navigate = useNavigate();

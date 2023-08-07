@@ -5,6 +5,7 @@ import "./Finish.css";
 import { BsCheckCircleFill } from "react-icons/bs";
 
 import Gif from "../../assets/gif.gif";
+import { restaurantTime } from "../../shared/config";
 
 const Finish = () => {
   return (
@@ -14,10 +15,7 @@ const Finish = () => {
         <div className="row text-center">
           <div className="col">
             <h5>Pedido realizado com sucesso!</h5>
-            <p>
-              Tempo médio de entrega {import.meta.env.VITE_RESTAURANT_TIME}{" "}
-              minutos
-            </p>
+            <p>Tempo médio de entrega {restaurantTime} minutos</p>
             <BsCheckCircleFill size={40} style={{ color: "#2dd177" }} />
           </div>
         </div>

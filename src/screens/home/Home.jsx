@@ -12,7 +12,7 @@ import { deepEqual } from "../../shared/DeepEqual";
 import Swal from "sweetalert2";
 import Payment from "../payment/Payment";
 import Confirm from "../confirm/Confirm";
-import { apiUrl } from "../../shared/ApiUrl";
+import { apiUrl } from "../../shared/config";
 
 const Home = () => {
   const navigate = useNavigate();
