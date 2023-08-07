@@ -20,7 +20,7 @@ const Header = () => {
         }}
       >
         <h2 className="mt-1" style={{ color: "white" }}>
-          {import.meta.env.VITE_RESTAURANT_NAME}
+          {restaurantName}
         </h2>
       </div>
     </>

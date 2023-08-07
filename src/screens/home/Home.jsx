@@ -124,7 +124,7 @@ const Home = () => {
   const getMenu = async () => {
     const options = {
       method: "GET",
-      url: `${import.meta.env.VITE_API_URL}/api/items/getmenu`,
+      url: `${apiUrl}/api/items/getmenu`,
     };
 
     setLoading(true);
