@@ -1,7 +1,7 @@
 
 FROM node:alpine
 
-WORKDIR /app/doofmanager
+WORKDIR /app/doofclient
 
 COPY . .
 
