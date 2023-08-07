@@ -1,7 +1,7 @@
-const apiUrl = import.meta.env.VITE_API_URL || "https://api.comunicacao.work";
+const apiUrl = import.meta.env.VITE_API_URL;
 
-const restaurantName = import.meta.env.VITE_RESTAURANT_NAME || "Doof";
+const restaurantName = import.meta.env.VITE_RESTAURANT_NAME;
 
-const restaurantTime = import.meta.env.VITE_RESTAURANT_TIME || 30;
+const restaurantTime = import.meta.env.VITE_RESTAURANT_TIME;
 
 export { apiUrl, restaurantName, restaurantTime };
