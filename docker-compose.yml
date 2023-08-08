@@ -6,5 +6,11 @@ services:
       context: ./doofclientui
     ports:
       - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      - VITE_API_URL=${VITE_API_URL}
+      - VITE_RESTAURANT_NAME=${VITE_RESTAURANT_NAME}
+      - VITE_RESTAURANT_TIME=${VITE_RESTAURANT_TIME}
     volumes:
       - ./doofclientui/dist:/root/doofclientui/dist
