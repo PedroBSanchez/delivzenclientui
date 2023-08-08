@@ -1,14 +1,16 @@
 
 FROM node:alpine
 
-WORKDIR /app/doofclient
+WORKDIR /app
 
-COPY . .
+COPY package*.json ./
 
 RUN npm install
+
+COPY . .
 
 RUN npm run build
 
 EXPOSE 3000
 
-CMD ["npx", "http-server", "./dist", "-p 3000"]
+CMD ["npm", "start"]
