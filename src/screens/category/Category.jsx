@@ -36,7 +36,7 @@ const Category = (props) => {
         {props.categoryMenu.items.map((item, index) => {
           return (
             <div key={index} className="row justify-content-center mt-3">
-              <div className="col-9">
+              <div className="col-9 col-md-4">
                 <ItemCard
                   item={item}
                   category={props.categoryMenu.category}
